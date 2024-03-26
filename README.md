@@ -834,6 +834,11 @@ Many other companies, from startups to large companies, have adopted IaC practic
 
 ```bash
 sudo apt update
+
+# Necessary to install the latest version of Ansible
+sudo apt install software-properties-common
+sudo apt-add-repository --yes --update ppa:ansible/ansible
+
 sudo apt install ansible
 ```
 

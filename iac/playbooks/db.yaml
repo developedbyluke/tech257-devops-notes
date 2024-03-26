@@ -21,8 +21,8 @@
         notify:
             - restart mongodb
 
-        handlers:
-            - name: restart mongodb
-              service:
-                  name: mongodb
-                  state: restarted
+  handlers:
+      - name: restart mongodb
+        service:
+            name: mongodb
+            state: restarted
