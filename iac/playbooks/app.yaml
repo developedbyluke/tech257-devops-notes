@@ -1,0 +1,65 @@
+# Combination of install and deploy playbooks
+---
+- name: Install and deploy app
+  hosts: ec2-app
+  gather_facts: true
+  become: true
+
+  tasks:
+      - name: Update and upgrade apt
+        apt:
+            update_cache: yes
+            upgrade: dist
+
+      - name: Install nginx
+        apt:
+            name: nginx
+            state: present
+
+      - name: Configure reverse proxy
+        shell: |
+            sed -i "s|try_files .*;|proxy_pass http://127.0.0.1:3000;|g" /etc/nginx/sites-available/default
+            systemctl restart nginx
+            systemctl enable nginx
+
+      - name: Install nvm
+        ansible.builtin.shell: >
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+        args:
+            creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+      - name: Install Node.js 17 with nvm
+        shell: |
+            source ~/.nvm/nvm.sh
+            nvm install 17
+            nvm use 17
+        args:
+            executable: /bin/bash
+
+      - name: Install Git
+        apt:
+            name: git
+
+      - name: Clone Git repo
+        shell: git clone https://github.com/developedbyluke/tech257-ci-cd.git /temp/repo
+
+      - name: Move app folder out of cloned repo
+        shell: |
+            mv /temp/repo/app /
+            rm -rf /temp/repo
+
+      - name: Install app dependencies
+        npm:
+            path: "/app"
+        environment:
+            DB_HOST: "mongodb://54.216.39.169/posts"
+            PATH: "{{ ansible_env.HOME }}/.nvm/versions/node/v17.0.0/bin:{{ ansible_env.PATH }}"
+
+      - name: Start app in the background
+        shell: |
+            export DB_HOST="mongodb://54.216.39.169/posts"
+            nohup node app.js > app.log 2>&1 &
+        args:
+            chdir: /app
+        environment:
+            PATH: "{{ ansible_env.HOME }}/.nvm/versions/node/v17.0.0/bin:{{ ansible_env.PATH }}"

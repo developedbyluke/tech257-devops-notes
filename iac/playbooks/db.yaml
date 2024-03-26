@@ -1,0 +1,28 @@
+---
+- hosts: ec2-db
+  gather_facts: yes
+  become: true
+
+  tasks:
+      - name: Update and upgrade
+        apt:
+            update_cache: yes
+            upgrade: dist
+
+      - name: installing Mongodb in the db server
+        apt: pkg=mongodb state=present
+
+      - name: Update MongoDB bindIp configuration
+        lineinfile:
+            path: /etc/mongodb.conf
+            regexp: "^  bindIp: 127.0.0.1"
+            line: "  bindIp: 0.0.0.0"
+            state: present
+        notify:
+            - restart mongodb
+
+        handlers:
+            - name: restart mongodb
+              service:
+                  name: mongodb
+                  state: restarted

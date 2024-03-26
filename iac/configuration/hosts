@@ -1,0 +1,5 @@
+# private key path defined in ansible.cfg
+
+[agents]
+ec2-app ansible_host=ubuntu@34.242.218.20
+ec2-db ansible_host=ubuntu@54.216.39.169
