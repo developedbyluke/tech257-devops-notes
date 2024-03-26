@@ -358,29 +358,29 @@ Elastic Compute Cloud (EC2) is a service that allows you to create virtual machi
 
 In the AWS console, go to the EC2 dashboard and click on the "Launch Instance" button.
 
-![](images/image-1.png)
+![](aws-notes/images/image-1.png)
 
 Choose a suitable image and instance type.
 
-<img src="images/image-2.png" width="65%">
+<img src="aws-notes/images/image-2.png" width="65%">
 
 Configure the network settings to allow HTTP traffic and give the security group a name if necessary.
 
-<img src="images/image-3.png" width="65%">
+<img src="aws-notes/images/image-3.png" width="65%">
 
 Check the summary to make sure everything is correct and click "Launch instance".
 
-<img src="images/image-4.png" width="30%">
+<img src="aws-notes/images/image-4.png" width="30%">
 
 When the instance has been created, click the underlined instance ID to go into the instance summary.
 
-<img src="images/image-5.png" width="50%">
+<img src="aws-notes/images/image-5.png" width="50%">
 
 #### Step 2: Connect to the instance
 
 Click "Refresh" until the "Connect" button is available and then click on it.
 
-<img src="images/image-6.png" width="50%">
+<img src="aws-notes/images/image-6.png" width="50%">
 
 Go to the 'SSH client' tab and copy the command to connect to the instance in a terminal.
 
@@ -424,7 +424,7 @@ pm2 start app.js
 
 The app should now be running and you should be able to access it by going to the public IP address of the EC2 instance in a web browser. You shouldn't need to specify the port as the reverse proxy should be working.
 
-<img src="images/image-7.png">
+<img src="aws-notes/images/image-7.png">
 
 ### Setting up a 2-tier Deployment by adding a Database
 
@@ -490,7 +490,7 @@ pm2 start app.js
 
 You should now be able to go to the /posts page and see the list of posts.
 
-<img src="images/image-8.png">
+<img src="aws-notes/images/image-8.png">
 
 ## CI/CD and Jenkins
 
@@ -498,7 +498,7 @@ You should now be able to go to the /posts page and see the list of posts.
 
 CI/CD, or Continuous Integration/Continuous Delivery, is a practice in DevOps that aims to improve software development and deployment processes, mainly by making them much faster.
 
-![](images/image-2.png)
+![](ci-cd/images/image-2.png)
 
 #### Continuous Integration (CI)
 
@@ -507,7 +507,7 @@ CI/CD, or Continuous Integration/Continuous Delivery, is a practice in DevOps th
 -   Provides immediate feedback to the team.
 -   Can identify bugs early and save time through automation.
 
-![](images/image.png)
+![](ci-cd/images/image.png)
 
 #### Continuous Delivery (CD)
 
@@ -515,7 +515,7 @@ CI/CD, or Continuous Integration/Continuous Delivery, is a practice in DevOps th
 -   The app is always ready to be sent to users, but someone has to decide when to do it.
 -   The app is sent to users automatically whenever it passes all the tests.
 
-![](images/image-1.png)
+![](ci-cd/images/image-1.png)
 
 ### Why use CI/CD?
 
@@ -546,7 +546,7 @@ Using an example of a simple CI/CD pipeline with Jenkins, GitHub, and AWS:
 -   If the tests fail, Jenkins lets the developers know so they can fix the problems.
 -   The app is constantly being improved, tested, and made available to users, all with minimal manual work. It helps teams work together better and keeps the quality of the app high.
 
-![](images/image-7.png)
+![](ci-cd/images/image-7.png)
 
 ### Integrating GitHub Webhooks to a Jenkins Pipeline
 
@@ -562,14 +562,14 @@ Using an example of a simple CI/CD pipeline with Jenkins, GitHub, and AWS:
 -   Enter a name for the job and select 'Freestyle project'.
 -   Provide the GitHub project URL in the 'General' section.
 
-![](images/image-6.png)
+![](ci-cd/images/image-6.png)
 
 -   In the 'Source Code Management' section, select 'Git' and provide the SSH repository URL.
 -   Add the private SSH key to the credentials part.
 -   Specify the branch to use.
 -   In the 'Build Triggers' section, select 'GitHub hook trigger for GITScm polling'.
 
-![](images/image-3.png)
+![](ci-cd/images/image-3.png)
 
 #### Add a GitHub Webhook
 
@@ -580,13 +580,13 @@ Using an example of a simple CI/CD pipeline with Jenkins, GitHub, and AWS:
 -   Make sure the webhook is active.
 -   Click 'Add webhook'.
 
-![](images/image-4.png)
+![](ci-cd/images/image-4.png)
 
 Now, whenever a change is pushed to the GitHub repository, Jenkins will automatically trigger the job.
 
 You should see a green checkmark next to the webhook URL in the GitHub settings if it is working correctly.
 
-![](images/image-5.png)
+![](ci-cd/images/image-5.png)
 
 ### Merging with Jenkins
 
@@ -916,7 +916,7 @@ With the shell module, I'm able to run shell commands that I previously included
 
 #### Install and configure Nginx
 
-[install-nginx.yaml](scripts/install_nginx.yaml)
+[install-nginx.yaml](iac/playbooks/install_nginx.yaml)
 
 ```yaml
 ---
@@ -940,7 +940,7 @@ With the shell module, I'm able to run shell commands that I previously included
 
 #### Deploy app
 
-[deploy-app.yaml](scripts/deploy_app.yaml)
+[deploy-app.yaml](iac/playbooks/deploy_app.yaml)
 
 ```yaml
 ---
