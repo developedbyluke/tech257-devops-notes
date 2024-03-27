@@ -89,6 +89,14 @@
         -   [Using shell module](#using-shell-module)
         -   [Install and configure Nginx](#install-and-configure-nginx)
         -   [Deploy app](#deploy-app)
+    -   [Terraform](#terraform)
+        -   [What is Terraform](#what-is-terraform)
+        -   [Setting up Terraform](#setting-up-terraform)
+        -   [Configuring EC2 instances with Terraform](#configuring-ec2-instances-with-terraform)
+            -   [Provider block](#provider-block)
+            -   [Security group](#security-group)
+            -   [EC2 instance](#ec2-instance)
+            -   [Running Terraform](#running-terraform)
 
 ## Markdown, Git and APIs
 
@@ -982,3 +990,105 @@ With the shell module, I'm able to run shell commands that I previously included
         pm2 kill
         pm2 start app.js
 ```
+
+### Terraform
+
+#### What is Terraform
+
+Terraform is a tool that allows you to create and manage infrastructure, such as virtual machines, networks, and storage, using code. This approach is called "Infrastructure as Code" (IaC). Instead of manually setting up resources, you write code that describes what you want to create. Terraform then takes care of creating and configuring them resources.
+
+#### Setting up Terraform
+
+-   Download and install Terraform
+-   Create a new directory for your Terraform files
+-   Create a new `main.tf` file
+
+The `main.tf` is a configuration file that defines the desired state of your infrastructure.
+
+#### Configuring EC2 instances with Terraform
+
+##### Provider block
+
+```h
+provider "aws" {
+  region = "eu-west-1"
+}
+```
+
+The provider block specifies which cloud provider you want to use. In this case, AWS. The region attribute sets the AWS region where your resources will be created. Here, it's set to `eu-west-1`, which represents the Ireland region.
+
+##### Security group
+
+```h
+resource "aws_security_group" "tech257-lukeh-sg" {
+  name = "tech257-lukeh-sg"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+```
+
+The resource block defines a resource you want to create. In this case, an AWS security group. A security group acts as a virtual firewall, controlling inbound and outbound traffic for your EC2 instances.
+
+The ingress blocks define the inbound rules, allowing traffic on specific ports.
+
+The egress block defines the outbound rule, allowing all outbound traffic from the EC2 instance.
+
+##### EC2 instance
+
+```h
+resource "aws_instance" "tech257-lukeh-terraform-app" {
+  tags = {
+    Name = "tech257-lukeh-terraform-app"
+  }
+
+  ami           = "ami-02f0341ac93c96375"
+  instance_type = "t2.micro"
+
+  associate_public_ip_address = true
+  key_name                    = "tech257"
+
+  vpc_security_group_ids = [aws_security_group.tech257-lukeh-sg.id]
+}
+```
+
+-   The tags attribute sets the name tag for the EC2 instance.
+-   The ami attribute specifies the AMI ID, which is the image the VM will be built with.
+-   The instance_type attribute sets the instance size and capacity. `t2.micro` is a small and low-cost type.
+-   The associate_public_ip_address attribute assigns a public IP address to the instance, making it accessible from the internet.
+-   The key_name attribute specifies the key pair to use for SSH access.
+-   The vpc_security_group_ids attribute links the EC2 instance to the security group created earlier.
+
+##### Running Terraform
+
+When the `main.tf` file has been configured, you can run Terraform to create the resources.
+
+-   Run `terraform init` if it's the first time running Terraform in the directory.
+-   Run `terraform plan` to see what resources will be created.
+-   Run `terraform apply` to create the resources.
+-   Run `terraform destroy` to remove the resources.
