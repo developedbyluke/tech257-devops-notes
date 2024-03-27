@@ -97,6 +97,8 @@
             -   [Security group](#security-group)
             -   [EC2 instance](#ec2-instance)
             -   [Running Terraform](#running-terraform)
+    -   [Pull and Push Configuration Management](#pull-and-push-configuration-management)
+        -   [Pull Configuration Management](#pull-configuration-management)
 
 ## Markdown, Git and APIs
 
@@ -1092,3 +1094,11 @@ When the `main.tf` file has been configured, you can run Terraform to create the
 -   Run `terraform plan` to see what resources will be created.
 -   Run `terraform apply` to create the resources.
 -   Run `terraform destroy` to remove the resources.
+
+### Pull and Push Configuration Management
+
+Pull and push configuration management are two different approaches to managing and applying configuration changes.
+
+#### Pull Configuration Management
+
+In the pull approach, the managed nodes (e.g., servers or instances) periodically check for updates or changes from a central configuration management server. The nodes actively pull the latest configuration from the server and apply the changes locally.
