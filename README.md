@@ -1101,4 +1101,4 @@ Pull and push configuration management are two different approaches to managing 
 
 #### Pull Configuration Management
 
-In the pull approach, the managed nodes (e.g., servers or instances) periodically check for updates or changes from a central configuration management server. The nodes actively pull the latest configuration from the server and apply the changes locally.
+In the pull approach, the nodes (e.g., servers or instances) periodically check for updates or changes from a central configuration management server. The nodes actively pull the latest configuration from the server and apply the changes locally.
