@@ -1,9 +1,9 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = var.region
 }
 
-resource "aws_security_group" "tech257-lukeh-sg" {
-  name = "tech257-lukeh-sg"
+resource "aws_security_group" "security_group" {
+  name = var.sg_name
 
   ingress {
     from_port   = 22
@@ -34,13 +34,13 @@ resource "aws_security_group" "tech257-lukeh-sg" {
   }
 }
 
-resource "aws_instance" "tech257-lukeh-terraform-app" {
+resource "aws_instance" "app_instance" {
   tags = {
-    Name = "tech257-lukeh-terraform-app"
+    Name = var.app_name
   }
   ami                         = var.ami_id
-  instance_type               = "t2.micro"
+  instance_type               = var.instance_type
   associate_public_ip_address = true
-  key_name                    = "tech257"
-  vpc_security_group_ids      = [aws_security_group.tech257-lukeh-sg.id]
+  key_name                    = var.key_name
+  vpc_security_group_ids      = [aws_security_group.security_group.id]
 }
