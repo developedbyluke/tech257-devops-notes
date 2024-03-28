@@ -38,7 +38,7 @@ resource "aws_instance" "tech257-lukeh-terraform-app" {
   tags = {
     Name = "tech257-lukeh-terraform-app"
   }
-  ami                         = "ami-02f0341ac93c96375"
+  ami                         = var.ami_id
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = "tech257"
