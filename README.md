@@ -93,6 +93,7 @@
         -   [What is Terraform](#what-is-terraform)
         -   [Setting up Terraform](#setting-up-terraform)
         -   [Configuring EC2 instances with Terraform](#configuring-ec2-instances-with-terraform)
+        -   [Set AWS credentials](#set-aws-credentials)
             -   [Provider block](#provider-block)
             -   [Security group](#security-group)
             -   [EC2 instance](#ec2-instance)
@@ -1008,6 +1009,13 @@ Terraform is a tool that allows you to create and manage infrastructure, such as
 The `main.tf` is a configuration file that defines the desired state of your infrastructure.
 
 #### Configuring EC2 instances with Terraform
+
+#### Set AWS credentials
+
+```bash
+export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLEKEY
+export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+```
 
 ##### Provider block
 
