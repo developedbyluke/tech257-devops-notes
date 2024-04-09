@@ -38,6 +38,13 @@
         -   [Step 3: Set a DB_HOST environment variable on the app VM](#step-3-set-a-db_host-environment-variable-on-the-app-vm)
         -   [Step 4: Restart the app](#step-4-restart-the-app)
         -   [Result](#result-1)
+    -   [Creating an AMI from an EC2 instance](#creating-an-ami-from-an-ec2-instance)
+        -   [Prerequisites](#prerequisites)
+        -   [Steps](#steps)
+    -   [Deleting an AMI](#deleting-an-ami)
+        -   [Steps](#steps-1)
+    -   [Autoscaling](#autoscaling)
+        -   [](#)
 -   [CI/CD and Jenkins](#cicd-and-jenkins)
     -   [What is CI/CD?](#what-is-cicd)
         -   [Continuous Integration (CI)](#continuous-integration-ci)
@@ -47,7 +54,7 @@
     -   [Where is CI/CD used?](#where-is-cicd-used)
     -   [How does CI/CD work?](#how-does-cicd-work)
     -   [Integrating GitHub Webhooks to a Jenkins Pipeline](#integrating-github-webhooks-to-a-jenkins-pipeline)
-        -   [Prerequisites](#prerequisites)
+        -   [Prerequisites](#prerequisites-1)
         -   [Create a Jenkins Job](#create-a-jenkins-job)
         -   [Add a GitHub Webhook](#add-a-github-webhook)
     -   [Merging with Jenkins](#merging-with-jenkins)
@@ -82,8 +89,8 @@
         -   [Benefits of using Ansible:](#benefits-of-using-ansible)
         -   [Who is using IaC and Ansible](#who-is-using-iac-and-ansible)
     -   [Setting up Ansible](#setting-up-ansible)
-        -   [Prerequisites](#prerequisites-1)
-        -   [Steps](#steps)
+        -   [Prerequisites](#prerequisites-2)
+        -   [Steps](#steps-2)
     -   [Useful Ansible Links](#useful-ansible-links)
     -   [Deploying an App on Agent Node](#deploying-an-app-on-agent-node)
         -   [Using shell module](#using-shell-module)
@@ -502,6 +509,38 @@ pm2 start app.js
 You should now be able to go to the /posts page and see the list of posts.
 
 <img src="aws-notes/images/image-8.png">
+
+### Creating an AMI from an EC2 instance
+
+#### Prerequisites
+
+-   [x] An EC2 instance
+
+#### Steps
+
+1. Go to the EC2 dashboard and click on "Instances" in the left-hand menu.
+2. Select the instance you want to create an AMI from.
+3. Click on "Actions" and then "Image and templates" and then "Create image".
+4. Enter a name for the image and a description if necessary.
+5. Click "Create image".
+6. Wait for the image to be created. You can check the progress in the "AMIs" section of the EC2 dashboard.
+7. Once the image is created, you can launch a new instance from it by clicking on "Launch instance" in the "Actions" menu.
+
+### Deleting an AMI
+
+#### Steps
+
+1. Navigate to the AMI to be deleted.
+2. Click on the AMI and then click on the "Actions" dropdown.
+3. Select "Deregister" to remove the AMI from the list of available images.
+4. Open the "Delete associated snapshots" dropdown and open the link in a new tab to see the snapshots.
+5. Go back to the AMI tab and confirm the deregistration.
+6. Go to the snapshots tab.
+7. Select the associated snapshot(s) and click "Delete" to remove them.
+
+### Autoscaling
+
+####
 
 ## CI/CD and Jenkins
 
