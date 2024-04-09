@@ -39,12 +39,12 @@
         -   [Step 4: Restart the app](#step-4-restart-the-app)
         -   [Result](#result-1)
     -   [Creating an AMI from an EC2 instance](#creating-an-ami-from-an-ec2-instance)
-        -   [Prerequisites](#prerequisites)
+        -   [Pre-requisites](#pre-requisites)
         -   [Steps](#steps)
     -   [Deleting an AMI](#deleting-an-ami)
         -   [Steps](#steps-1)
     -   [Autoscaling](#autoscaling)
-        -   [Pre-requisites](#pre-requisites)
+        -   [Pre-requisites](#pre-requisites-1)
         -   [Create a Launch Template](#create-a-launch-template)
         -   [Create an Auto Scaling Group](#create-an-auto-scaling-group)
 -   [CI/CD and Jenkins](#cicd-and-jenkins)
@@ -56,7 +56,7 @@
     -   [Where is CI/CD used?](#where-is-cicd-used)
     -   [How does CI/CD work?](#how-does-cicd-work)
     -   [Integrating GitHub Webhooks to a Jenkins Pipeline](#integrating-github-webhooks-to-a-jenkins-pipeline)
-        -   [Prerequisites](#prerequisites-1)
+        -   [Prerequisites](#prerequisites)
         -   [Create a Jenkins Job](#create-a-jenkins-job)
         -   [Add a GitHub Webhook](#add-a-github-webhook)
     -   [Merging with Jenkins](#merging-with-jenkins)
@@ -91,7 +91,7 @@
         -   [Benefits of using Ansible:](#benefits-of-using-ansible)
         -   [Who is using IaC and Ansible](#who-is-using-iac-and-ansible)
     -   [Setting up Ansible](#setting-up-ansible)
-        -   [Prerequisites](#prerequisites-2)
+        -   [Prerequisites](#prerequisites-1)
         -   [Steps](#steps-2)
     -   [Useful Ansible Links](#useful-ansible-links)
     -   [Deploying an App on Agent Node](#deploying-an-app-on-agent-node)
@@ -514,7 +514,7 @@ You should now be able to go to the /posts page and see the list of posts.
 
 ### Creating an AMI from an EC2 instance
 
-#### Prerequisites
+#### Pre-requisites
 
 -   [x] An EC2 instance
 
