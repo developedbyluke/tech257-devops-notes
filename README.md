@@ -540,7 +540,37 @@ You should now be able to go to the /posts page and see the list of posts.
 
 ### Autoscaling
 
-####
+#### Pre-requisites
+
+-   [x] An AMI with the app installed
+
+#### Create a Launch Template
+
+1. Click on "Launch Templates" in the left-hand menu.
+2. Click on "Create launch template".
+3. Enter a name for the template and select the AMI with the app installed.
+4. Configure the instance type, key pair, security group, and other settings that newly launched instances should have.
+5. Click "Create launch template".
+6. Test the launch template by launching an instance from it and checking that the app is running.
+
+#### Create an Auto Scaling Group
+
+1. Click on "Auto Scaling Groups" in the left-hand menu.
+2. Click on "Create Auto Scaling group".
+3. Select the launch template you created earlier.
+4. Click "Next".
+5. Keep the default VPC but select three subnets in different availability zones for high availability.
+6. Click "Next".
+7. Select "Attach to a new load balancer" and create a new Application Load Balancer that is internet-facing.
+8. In "Default routing (forward to)", select "Create a target group" and give it a name.
+9. Enable "Turn on Elastic Load Balancing health checks".
+10. Click "Next".
+11. Select the desired, minimum, and maximum number of instances, e.g. 2, 2, 3.
+12. Select "Target tracking scaling policy" to set up a CPU utilisation CloudWatch metric.
+13. Select "Launch before terminating" for "Instance maintenance policy" to prioritise high availability.
+14. Review and click "Create Auto Scaling group".
+15. There should now be two instances running.
+16. Test the app is running by going to the load balancer's DNS name in a browser.
 
 ## CI/CD and Jenkins
 
