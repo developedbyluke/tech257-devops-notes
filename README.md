@@ -47,6 +47,7 @@
         -   [Pre-requisites](#pre-requisites-1)
         -   [Create a Launch Template](#create-a-launch-template)
         -   [Create an Auto Scaling Group](#create-an-auto-scaling-group)
+    -   [Autoscaling with Two-tier Architecture](#autoscaling-with-two-tier-architecture)
 -   [CI/CD and Jenkins](#cicd-and-jenkins)
     -   [What is CI/CD?](#what-is-cicd)
         -   [Continuous Integration (CI)](#continuous-integration-ci)
@@ -573,6 +574,8 @@ You should now be able to go to the /posts page and see the list of posts.
 14. Review and click "Create Auto Scaling group".
 15. There should now be two instances running.
 16. Test the app is running by going to the load balancer's DNS name in a browser.
+
+### Autoscaling with Two-tier Architecture
 
 ## CI/CD and Jenkins
 
