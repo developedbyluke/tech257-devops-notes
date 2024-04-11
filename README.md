@@ -45,9 +45,10 @@
         -   [Steps](#steps-1)
     -   [Autoscaling](#autoscaling)
         -   [Pre-requisites](#pre-requisites-1)
+        -   [Auto Scaling Group](#auto-scaling-group)
+        -   [Launch Template](#launch-template)
         -   [Create a Launch Template](#create-a-launch-template)
         -   [Create an Auto Scaling Group](#create-an-auto-scaling-group)
-    -   [Autoscaling with Two-tier Architecture](#autoscaling-with-two-tier-architecture)
 -   [CI/CD and Jenkins](#cicd-and-jenkins)
     -   [What is CI/CD?](#what-is-cicd)
         -   [Continuous Integration (CI)](#continuous-integration-ci)
@@ -543,9 +544,19 @@ You should now be able to go to the /posts page and see the list of posts.
 
 ### Autoscaling
 
+Autoscaling in AWS allows you to automatically adjust the number of EC2 instances based on the demand of your application. It ensures that your application can handle varying levels of traffic while optimising costs by scaling in or out as needed.
+
 #### Pre-requisites
 
 -   [x] An AMI with the app installed
+
+#### Auto Scaling Group
+
+An Auto Scaling Group is a collection of EC2 instances used for automatic scaling and management. It uses a Launch Template to launch instances and can be associated with a Load Balancer to distribute traffic across the instances.
+
+#### Launch Template
+
+A Launch Template is a pre-configured template that defines the configuration of EC2 instances launched by the Auto Scaling group. It includes settings such as the Amazon Machine Image (AMI), instance type, key pair, security groups, and user data. Launch Templates make it easy to create Auto Scaling groups with consistent instance configurations.
 
 #### Create a Launch Template
 
@@ -574,8 +585,6 @@ You should now be able to go to the /posts page and see the list of posts.
 14. Review and click "Create Auto Scaling group".
 15. There should now be two instances running.
 16. Test the app is running by going to the load balancer's DNS name in a browser.
-
-### Autoscaling with Two-tier Architecture
 
 ## CI/CD and Jenkins
 
