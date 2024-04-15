@@ -49,6 +49,36 @@
         -   [Launch Template](#launch-template)
         -   [Create a Launch Template](#create-a-launch-template)
         -   [Create an Auto Scaling Group](#create-an-auto-scaling-group)
+    -   [Two-tier Deployment in a Custom VPC](#two-tier-deployment-in-a-custom-vpc)
+        -   [Pre-requisites](#pre-requisites-2)
+    -   [Simple Storage Service (S3)](#simple-storage-service-s3)
+        -   [Install Dependencies for AWS CLI](#install-dependencies-for-aws-cli)
+            -   [Update and Upgrade](#update-and-upgrade)
+            -   [Make sure Python is installed](#make-sure-python-is-installed)
+            -   [Install pip](#install-pip)
+            -   [Install AWS CLI](#install-aws-cli)
+            -   [Make sure the AWS CLI is installed](#make-sure-the-aws-cli-is-installed)
+        -   [Configure the AWS CLI](#configure-the-aws-cli)
+            -   [Run the configure command](#run-the-configure-command)
+            -   [Enter account information](#enter-account-information)
+        -   [Commands](#commands)
+            -   [List All Buckets](#list-all-buckets)
+            -   [List Objects in a Bucket](#list-objects-in-a-bucket)
+            -   [Copy a Local File to S3](#copy-a-local-file-to-s3)
+            -   [Copy an S3 Object to a Local File](#copy-an-s3-object-to-a-local-file)
+            -   [Move a Local File to S3](#move-a-local-file-to-s3)
+            -   [Move an S3 Object to a Local File](#move-an-s3-object-to-a-local-file)
+            -   [Sync a Local Directory to an S3 Bucket](#sync-a-local-directory-to-an-s3-bucket)
+            -   [Sync an S3 Bucket to a Local Directory](#sync-an-s3-bucket-to-a-local-directory)
+            -   [Delete an Object from S3](#delete-an-object-from-s3)
+            -   [Delete All Objects in a Bucket](#delete-all-objects-in-a-bucket)
+            -   [Create a New Bucket](#create-a-new-bucket)
+            -   [Delete a Bucket (Bucket Must be Empty)](#delete-a-bucket-bucket-must-be-empty)
+            -   [:warning: Force Delete a Bucket and All Its Contents](#warning-force-delete-a-bucket-and-all-its-contents)
+        -   [Boto3 for Amazon S3](#boto3-for-amazon-s3)
+            -   [Key Features of `boto3` for Amazon S3:](#key-features-of-boto3-for-amazon-s3)
+            -   [Setting Up `boto3`](#setting-up-boto3)
+            -   [Scripts to Interact with S3](#scripts-to-interact-with-s3)
 -   [CI/CD and Jenkins](#cicd-and-jenkins)
     -   [What is CI/CD?](#what-is-cicd)
         -   [Continuous Integration (CI)](#continuous-integration-ci)
@@ -585,6 +615,183 @@ A Launch Template is a pre-configured template that defines the configuration of
 14. Review and click "Create Auto Scaling group".
 15. There should now be two instances running.
 16. Test the app is running by going to the load balancer's DNS name in a browser.
+
+### Two-tier Deployment in a Custom VPC
+
+#### Pre-requisites
+
+-   [x] An AMI for the app
+-   [x] An AMI for the database
+
+### Simple Storage Service (S3)
+
+S3 is a service that is similar to Azure's Blob Storage. It allows you to store and retrieve data from the cloud. It is highly scalable and secure and can be used to store a wide variety of data types.
+
+#### Install Dependencies for AWS CLI
+
+##### Update and Upgrade
+
+```bash
+sudo apt update -y && sudo apt upgrade -y
+```
+
+##### Make sure Python is installed
+
+```bash
+python3 --version
+```
+
+##### Install pip
+
+```bash
+sudo apt install python3-pip -y
+```
+
+##### Install AWS CLI
+
+```bash
+pip install awscli
+```
+
+##### Make sure the AWS CLI is installed
+
+```bash
+aws --version
+```
+
+#### Configure the AWS CLI
+
+##### Run the configure command
+
+```bash
+aws configure
+```
+
+##### Enter account information
+
+-   AWS Access Key ID
+-   AWS Secret Access Key
+-   Default region name (eu-west-1)
+-   Default output format (json)
+
+#### Commands
+
+##### List All Buckets
+
+```bash
+aws s3 ls
+```
+
+##### List Objects in a Bucket
+
+```bash
+aws s3 ls s3://bucket-name
+```
+
+##### Copy a Local File to S3
+
+```bash
+aws s3 cp /path/to/local/file s3://bucket-name/path/to/destination
+```
+
+##### Copy an S3 Object to a Local File
+
+```bash
+aws s3 cp s3://bucket-name/path/to/object /path/to/local/destination
+```
+
+##### Move a Local File to S3
+
+```bash
+aws s3 mv /path/to/local/file s3://bucket-name/path/to/destination
+```
+
+##### Move an S3 Object to a Local File
+
+```bash
+aws s3 mv s3://bucket-name/path/to/object /path/to/local/destination
+```
+
+##### Sync a Local Directory to an S3 Bucket
+
+```bash
+aws s3 sync /path/to/local/directory s3://bucket-name/path/to/destination
+```
+
+##### Sync an S3 Bucket to a Local Directory
+
+```bash
+aws s3 sync s3://bucket-name/path/to/source /path/to/local/directory
+```
+
+##### Delete an Object from S3
+
+```bash
+aws s3 rm s3://bucket-name/path/to/object
+```
+
+##### Delete All Objects in a Bucket
+
+```bash
+aws s3 rm s3://bucket-name --recursive
+```
+
+##### Create a New Bucket
+
+```bash
+aws s3 mb s3://new-bucket-name
+```
+
+##### Delete a Bucket (Bucket Must be Empty)
+
+```bash
+aws s3 rb s3://bucket-name
+```
+
+##### :warning: Force Delete a Bucket and All Its Contents
+
+```bash
+aws s3 rb s3://bucket-name --force
+```
+
+:warning: **Warning** : The `--force` option is **dangerous** as it will permanently delete the bucket and all of its contents.
+
+#### Boto3 for Amazon S3
+
+`boto3` is the Amazon Web Services (AWS) SDK for Python. It allows Python developers to write software that uses services like Amazon S3, EC2, DynamoDB, and more. It is particularly useful for scripting interactions with AWS resources, automating tasks, and managing AWS services programmatically.
+
+##### Key Features of `boto3` for Amazon S3:
+
+1. **Bucket Operations** : You can create, list, and delete buckets.
+2. **Object Operations** : It allows you to upload, download, list, and delete objects within buckets.
+3. **Permissions and Security** : You can manage access controls and bucket policies.
+4. **Transfer Configurations** : Boto3 supports configurations to optimize the upload and download speeds.
+5. **Resource vs. Client APIs** : Boto3 offers two different types of APIs - resource APIs that provide a higher-level object-oriented interface, and client APIs that provide a lower-level service access.
+
+##### Setting Up `boto3`
+
+Before you start, make sure you have `boto3` installed and configured:
+
+```bash
+pip install boto3
+```
+
+To configure `boto3`, you'll generally want to set up an AWS IAM user with the necessary permissions and configure your credentials locally:
+
+```bash
+aws configure
+```
+
+This command will prompt you to enter your AWS access key, secret key, region, and output format, which are stored in `~/.aws/credentials` and `~/.aws/config` respectively.
+
+##### Scripts to Interact with S3
+
+[List all buckets](scripts/aws-s3-python-scripts/list_buckets.py)<br/>
+[Create a bucket](scripts/aws-s3-python-scripts/create_bucket.py)<br/>
+[Upload a file to S3](scripts/aws-s3-python-scripts/upload_file.py)<br/>
+[Download a file from S3](scripts/aws-s3-python-scripts/download_file.py)<br/>
+[Delete a file from S3](scripts/aws-s3-python-scripts/delete_file.py)<br/>
+[Delete a bucket](scripts/aws-s3-python-scripts/delete_bucket.py)<br/>
 
 ## CI/CD and Jenkins
 
