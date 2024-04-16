@@ -49,8 +49,13 @@
         -   [Launch Template](#launch-template)
         -   [Create a Launch Template](#create-a-launch-template)
         -   [Create an Auto Scaling Group](#create-an-auto-scaling-group)
-    -   [Two-tier Deployment in a Custom VPC](#two-tier-deployment-in-a-custom-vpc)
+    -   [CloudWatch \& Alert Management](#cloudwatch--alert-management)
         -   [Pre-requisites](#pre-requisites-2)
+        -   [Create a Dashboard](#create-a-dashboard)
+        -   [Add the EC2 instance monitoring data to the dashboard](#add-the-ec2-instance-monitoring-data-to-the-dashboard)
+        -   [Creating a CPU usage alarm](#creating-a-cpu-usage-alarm)
+    -   [Two-tier Deployment in a Custom VPC](#two-tier-deployment-in-a-custom-vpc)
+        -   [Pre-requisites](#pre-requisites-3)
     -   [Simple Storage Service (S3)](#simple-storage-service-s3)
         -   [Install Dependencies for AWS CLI](#install-dependencies-for-aws-cli)
             -   [Update and Upgrade](#update-and-upgrade)
@@ -141,6 +146,18 @@
             -   [Running Terraform](#running-terraform)
     -   [Pull and Push Configuration Management](#pull-and-push-configuration-management)
         -   [Pull Configuration Management](#pull-configuration-management)
+-   [Docker](#docker)
+    -   [Creating a Docker Image](#creating-a-docker-image)
+        -   [Create a new directory](#create-a-new-directory)
+        -   [Create a simple index.html file](#create-a-simple-indexhtml-file)
+        -   [Create a Dockerfile](#create-a-dockerfile)
+        -   [Build the Docker image](#build-the-docker-image)
+        -   [Run the Docker container](#run-the-docker-container)
+        -   [Test the app](#test-the-app)
+    -   [Push Docker Image to Docker Hub](#push-docker-image-to-docker-hub)
+        -   [Log in to Docker Hub](#log-in-to-docker-hub)
+        -   [Tag the Docker image](#tag-the-docker-image)
+        -   [Push the Docker image](#push-the-docker-image)
 
 ## Markdown, Git and APIs
 
@@ -615,6 +632,36 @@ A Launch Template is a pre-configured template that defines the configuration of
 14. Review and click "Create Auto Scaling group".
 15. There should now be two instances running.
 16. Test the app is running by going to the load balancer's DNS name in a browser.
+
+### CloudWatch & Alert Management
+
+#### Pre-requisites
+
+-   [x] An EC2 instance
+
+#### Create a Dashboard
+
+1. Go to the CloudWatch dashboard and click on "Dashboards" in the left-hand menu.
+2. Click on "Create dashboard".
+3. Enter a name for the dashboard and click "Create dashboard".
+
+#### Add the EC2 instance monitoring data to the dashboard
+
+1. Navigate to the EC2 instance and click on "Monitoring".
+2. If detailed monitoring is needed to see the data in 1-minute intervals, click on "Manage detailed monitoring" and enable it. Otherwise, the data will be in 5-minute intervals
+   ![](aws-notes/images/image-10.png)
+3. Click on "Add to dashboard" and select the dashboard you created.
+4. Click "Save".
+   ![](aws-notes/images/image-9.png)
+5. Go back to the dashboard and you should see the monitoring data for the EC2 instance.
+
+#### Creating a CPU usage alarm
+
+1. Go to the CloudWatch dashboard and click on "Alarms", "All alarms" in the left-hand menu.
+
+<img src="aws-notes/images/image11.png" width="65%">
+
+![](aws-notes/images/image-12.png)
 
 ### Two-tier Deployment in a Custom VPC
 
@@ -1400,3 +1447,79 @@ Pull and push configuration management are two different approaches to managing 
 #### Pull Configuration Management
 
 In the pull approach, the nodes (e.g., servers or instances) periodically check for updates or changes from a central configuration management server. The nodes actively pull the latest configuration from the server and apply the changes locally.
+
+## Docker
+
+### Creating a Docker Image
+
+#### Create a new directory
+
+```bash
+mkdir simple-docker-app
+```
+
+#### Create a simple index.html file
+
+```bash
+nano index.html
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Docker App</title>
+</head>
+
+<body>
+    <h1>Hello!</h1>
+</body>
+</html>
+```
+
+#### Create a Dockerfile
+
+```bash
+nano Dockerfile
+```
+
+```Dockerfile
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+```
+
+#### Build the Docker image
+
+```bash
+docker build -t simple-docker-app .
+```
+
+#### Run the Docker container
+
+```bash
+docker run -d -p 8080:80 simple-docker-app
+```
+
+#### Test the app
+
+Go to `http://localhost:8080` in a browser to see the app running.
+
+### Push Docker Image to Docker Hub
+
+#### Log in to Docker Hub
+
+```bash
+docker login
+```
+
+#### Tag the Docker image
+
+```bash
+docker tag simple-docker-app <docker-hub-username>/simple-docker-app
+```
+
+#### Push the Docker image
+
+```bash
+docker push <docker-hub-username>/simple-docker-app
+```
