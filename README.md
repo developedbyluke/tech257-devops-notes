@@ -1456,6 +1456,7 @@ In the pull approach, the nodes (e.g., servers or instances) periodically check 
 
 ```bash
 mkdir simple-docker-app
+cd simple-docker-app
 ```
 
 #### Create a simple index.html file
